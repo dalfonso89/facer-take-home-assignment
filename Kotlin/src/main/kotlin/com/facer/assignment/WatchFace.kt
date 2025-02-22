@@ -1,4 +1,4 @@
-package com.facer.assignment
+package com.facer.assignment.com.facer.assignment
 
 interface WatchFace {
     fun updateQuality()

@@ -1,5 +1,7 @@
 package com.facer.assignment
 
+import com.facer.assignment.com.facer.assignment.WatchFace
+
 open class WatchFaceItem(val item: Item) : WatchFace {
     override fun updateQuality() {
         if (item.quality > 0) {
