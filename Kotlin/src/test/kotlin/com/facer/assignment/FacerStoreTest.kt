@@ -28,7 +28,7 @@ internal class FacerStoreTest {
             Item("Casio Watch", 5, 7)
         )
         val app = FacerStore(items)
-        for (i in 0..<days) {
+          for (i in 0..days - 1) {
             app.updateQuality()
         }
 
@@ -54,7 +54,7 @@ internal class FacerStoreTest {
         val days = 10
         val items = listOf(Item("Vintage Rolex", 2, 0))
         val app = FacerStore(items)
-        for (i in 0..<days) {
+          for (i in 0..days - 1) {
             app.updateQuality()
         }
 
@@ -86,14 +86,14 @@ internal class FacerStoreTest {
             Item("Legendary Watch Face", -1, 80)
         )
         val app = FacerStore(items)
-        for (i in 0..<days) {
+          for (i in 0..days - 1) {
             app.updateQuality()
         }
 
         assertEquals(0, app.items[0].sellIn)
         assertEquals(80, app.items[0].quality)
 
-        assertEquals(0, app.items[1].sellIn)
+        assertEquals(-1, app.items[1].sellIn)
         assertEquals(80, app.items[1].quality)
     }
 
@@ -102,7 +102,8 @@ internal class FacerStoreTest {
         val items = listOf(
             Item("Passes to Watchface Conference", 15, 20),
             Item("Passes to Watchface Conference", 10, 49),
-            Item("Passes to Watchface Conference", 5, 49))
+            Item("Passes to Watchface Conference", 5, 49)
+        )
         val app = FacerStore(items)
         app.updateQuality()
 
@@ -122,9 +123,10 @@ internal class FacerStoreTest {
         val items = listOf(
             Item("Passes to Watchface Conference", 15, 20),
             Item("Passes to Watchface Conference", 10, 49),
-            Item("Passes to Watchface Conference", 5, 49))
+            Item("Passes to Watchface Conference", 5, 49)
+        )
         val app = FacerStore(items)
-        for (i in 0..<days) {
+          for (i in 0..days - 1) {
             app.updateQuality()
         }
 
@@ -136,5 +138,28 @@ internal class FacerStoreTest {
 
         assertEquals(-5, app.items[2].sellIn)
         assertEquals(0, app.items[2].quality)
+    }
+
+    @Test
+    fun testFragileWatchFaceDegradeSingleDay() {
+        val items = listOf(Item("Fragile Watch", 3, 6))
+        val app = FacerStore(items)
+        app.updateQuality()
+
+        assertEquals(2, app.items[0].sellIn)
+        assertEquals(4, app.items[0].quality)
+    }
+
+    @Test
+    fun testFragileWatchFaceDegradeMultipleDays() {
+        val days = 10
+        val items = listOf(Item("Fragile Watch", 3, 6))
+        val app = FacerStore(items)
+        for (i in 0..<days) {
+            app.updateQuality()
+        }
+
+        assertEquals(-7, app.items[0].sellIn)
+        assertEquals(0, app.items[0].quality)
     }
 }
